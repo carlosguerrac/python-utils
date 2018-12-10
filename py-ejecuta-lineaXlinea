@@ -1,0 +1,31 @@
+import sys
+import subprocess
+
+def run_cmd(cmd):
+    ## run it ##
+    p = subprocess.Popen(cmd, shell=True, stderr=subprocess.PIPE)
+    ## But do not wait till netstat finish, start displaying output immediately ##
+    while True:
+        out = p.stderr.read(1)
+        if out == '' and p.poll() != None:
+            break
+        if out != '':
+            sys.stdout.write(out)
+            sys.stdout.flush()
+
+filepath = sys.argv[1]
+
+fh = open(filepath)
+while True:
+    # read line
+    line = fh.readline()
+    # in python 2, print line
+    # in python 3
+    print(line)
+    cmd = line
+    # check if line is not empty
+    if not line:
+        break
+    run_cmd(cmd)
+
+fh.close()
