@@ -1,0 +1,30 @@
+from ftplib import FTP
+from datetime import datetime, date, time, timedelta
+import os
+
+
+def placeFile(filename):
+
+    local_path = '/var/log/log-microwave/'
+    ftp.cwd('DataEntry_CAMBIUM')
+    os.chdir(local_path)
+    ftp.storbinary('STOR %s' % filename, open(filename, 'rb'))
+    ftp.quit()
+
+
+def getFilename():
+    dt = datetime.now()
+    dt = dt-timedelta(minutes=2)
+    return dt.strftime("log-cambium-%Y-%m-%d.log")
+
+server     = '10.254.22.116'
+ftp_user   = 'ssra_dataentry_ftp'
+ftp_passwd = '*******'
+
+ftp = FTP(server)
+#ftp.set_debuglevel(2)
+ftp.login(user=ftp_user, passwd = ftp_passwd)
+
+filename = getFilename()
+print filename
+placeFile(filename)
