@@ -13,7 +13,11 @@ def run_cmd(cmd):
             sys.stdout.write(out)
             sys.stdout.flush()
 
-filepath = sys.argv[1]
+if (len(sys.argv) == 2):
+    filepath = sys.argv[1]
+else:
+    print ("Uso: %s <FILE_LIST>") % (sys.argv[0])
+    exit()
 
 fh = open(filepath)
 while True:
